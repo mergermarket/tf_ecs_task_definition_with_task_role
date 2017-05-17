@@ -1,4 +1,4 @@
-# tf_ecs_taskdef_with_task_role
+# tf_ecs_task_definition_with_task_role
 
 ## Usage
 Creates a task definition for an ECS service, with an IAM role for the task associated.
