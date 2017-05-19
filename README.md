@@ -7,8 +7,8 @@ Creates a task definition for an ECS service, with an IAM role for the task asso
 module "taskdef" {
     source = "github.com/mergermarket/tf_ecs_taskdef_with_task_role"
 
-    family               = "live-service-name"
-    container_defintions = [
+    family                = "live-service-name"
+    container_definitions = [
         <<END
 {
     ...container definition...
