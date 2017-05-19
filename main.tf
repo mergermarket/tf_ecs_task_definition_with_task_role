@@ -7,7 +7,7 @@ module "task_definition" {
 
 resource "aws_iam_role_policy" "role_policy" {
     name_prefix = "${var.family}"
-    role        = "${aws_iam_role.task_role.arn}"
+    role        = "${aws_iam_role.task_role.id}"
     policy      = "${var.policy}"
 }
 
