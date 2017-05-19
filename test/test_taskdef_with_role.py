@@ -23,6 +23,7 @@ class TestTaskdefWithRole(unittest.TestCase):
                 family:                "tf_ecs_task_def_test_family"
                 network_mode:          "<computed>"
                 revision:              "<computed>"
+                task_role_arn:         "${var.task_role_arn}"
         """).strip()
 
         assert expected in output
