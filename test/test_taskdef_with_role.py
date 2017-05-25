@@ -1,4 +1,7 @@
 import unittest
+import os
+import tempfile
+import shutil
 
 from subprocess import check_output, check_call
 from textwrap import dedent
@@ -7,14 +10,22 @@ from textwrap import dedent
 class TestTaskdefWithRole(unittest.TestCase):
 
     def setUp(self):
-        check_call(['terraform', 'get', 'test/infra'])
+        self.workdir = tempfile.mkdtemp()
+        self.module_path = os.path.join(os.getcwd(), 'test', 'infra')
+
+        check_call(
+            ['terraform', 'get', self.module_path],
+            cwd=self.workdir)
+
+    def tearDown(self):
+        if os.path.isdir(self.workdir):
+            shutil.rmtree(self.workdir)
 
     def test_task_definition_is_created(self):
         output = check_output(
-            ['terraform', 'plan', '-no-color', 'test/infra']
+            ['terraform', 'plan', '-no-color', self.module_path],
+            cwd=self.workdir
         ).decode('utf-8')
-
-        print(output)
 
         expected = dedent("""
             + module.taskdef_with_role.task_definition.aws_ecs_task_definition.taskdef
@@ -30,7 +41,8 @@ class TestTaskdefWithRole(unittest.TestCase):
 
     def test_task_role_is_created(self):
         output = check_output(
-            ['terraform', 'plan', '-no-color', 'test/infra']
+            ['terraform', 'plan', '-no-color', self.module_path],
+            cwd=self.workdir
         ).decode('utf-8')
 
         expected = dedent("""
@@ -48,7 +60,8 @@ class TestTaskdefWithRole(unittest.TestCase):
 
     def test_task_policy_is_created(self):
         output = check_output(
-            ['terraform', 'plan', '-no-color', 'test/infra']
+            ['terraform', 'plan', '-no-color', self.module_path],
+            cwd=self.workdir
         ).decode('utf-8')
 
         expected = dedent("""

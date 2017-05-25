@@ -2,13 +2,6 @@
 
 set -euo pipefail
 
-clean() {
-    rm -rf .terraform/
-    find . -type d -name __pycache__ | xargs rm -rf
-}
-
-trap clean EXIT
-
 repo_dir=$(git rev-parse --show-toplevel)
 name=$(basename $repo_dir)-test
 
