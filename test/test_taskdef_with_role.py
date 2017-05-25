@@ -56,7 +56,7 @@ class TestTaskdefWithRole(unittest.TestCase):
                 name:        "<computed>"
                 name_prefix: "tf_ecs_task_def_test_family"
                 policy:      "{\\n  \\"Version\\": \\"2012-10-17\\",\\n  \\"Statement\\": {\\n    \\"Effect\\": \\"Allow\\",\\n    \\"Action\\": \\"s3:ListBucket\\",\\n    \\"Resource\\": \\"arn:aws:s3:::example_bucket\\"\\n  }\\n}\\n"
-                role:        "${aws_iam_role.task_role.arn}"
+                role:        "${aws_iam_role.task_role.id}"
         """).strip()
 
         assert expected in output
