@@ -27,14 +27,45 @@ class TestTaskdefWithRole(unittest.TestCase):
             cwd=self.workdir
         ).decode('utf-8')
 
+        print(output)
+
         expected = dedent("""
             + module.taskdef_with_role.task_definition.aws_ecs_task_definition.taskdef
-                arn:                   "<computed>"
-                container_definitions: "a173db30ec08bc3c9ca77b5797aeae40987c1ef7"
-                family:                "tf_ecs_task_def_test_family"
-                network_mode:          "<computed>"
-                revision:              "<computed>"
-                task_role_arn:         "${var.task_role_arn}"
+                arn:                         "<computed>"
+                container_definitions:       "a173db30ec08bc3c9ca77b5797aeae40987c1ef7"
+                family:                      "tf_ecs_task_def_test_family"
+                network_mode:                "<computed>"
+                revision:                    "<computed>"
+                task_role_arn:               "${var.task_role_arn}"
+                volume.#:                    "1"
+                volume.3039886685.host_path: "/tmp/dummy_volume"
+                volume.3039886685.name:      "dummy"
+        """).strip()
+
+        assert expected in output
+
+    def test_task_definition_passes_volume(self):
+        output = check_output([
+            'terraform',
+            'plan', '-no-color',
+            '-var', 'task_volume_param={name="data_volume",host_path="/mnt/data"}',
+            self.module_path],
+            cwd=self.workdir
+        ).decode('utf-8')
+
+        print(output)
+
+        expected = dedent("""
+            + module.taskdef_with_role.task_definition.aws_ecs_task_definition.taskdef
+                arn:                       "<computed>"
+                container_definitions:     "a173db30ec08bc3c9ca77b5797aeae40987c1ef7"
+                family:                    "tf_ecs_task_def_test_family"
+                network_mode:              "<computed>"
+                revision:                  "<computed>"
+                task_role_arn:             "${var.task_role_arn}"
+                volume.#:                  "1"
+                volume.27251535.host_path: "/mnt/data"
+                volume.27251535.name:      "data_volume"
         """).strip()
 
         assert expected in output

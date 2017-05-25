@@ -10,6 +10,12 @@ provider "aws" {
   region                      = "eu-west-1"
 }
 
+variable "task_volume_param" {
+    description = "Allow the test to pass this in"
+    type = "map"
+    default = {}
+}
+
 module "taskdef_with_role" {
     source = "../.."
 
@@ -35,4 +41,6 @@ END
   }
 }
 END
+
+    volume = "${var.task_volume_param}"
 }
