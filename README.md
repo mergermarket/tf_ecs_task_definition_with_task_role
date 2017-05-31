@@ -37,3 +37,4 @@ END
 ### Outputs
 
 * `arn` - the ARN of the task definition.
+* `task_role_arn` - the ARN of the Role for this task definition.
