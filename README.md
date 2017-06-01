@@ -22,6 +22,10 @@ module "taskdef" {
 }
 END
 
+    volume = {
+        name = 'data'
+        host_path = '/mnt/data'
+    }
 }
 ```
 
@@ -32,7 +36,7 @@ END
 * `family` - the name of the task definition. For ECS services it is recommended to use the same name as for the service, and for that name to consist of the environment name (e.g. "live"), the comonent name (e.g. "foobar-service"), and an optional suffix (if an environment has multiple services for the component running - e.g. in a multi-tenant setup), separated by hyphens.
 * `container_definitions` - list of strings. Each string should be a JSON document describing a single container definition - see https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html.
 * `policy` - An IAM policy to control the task's access to AWS services - see http://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html
-* `volume` - Volume block map with 'name' and 'host_path'. 'name': The name of the volume as is referenced in the sourceVolume. 'host_path' The path on the host container instance that is presented to the container.
+* `volume` - Volume block map with 'name' and 'host_path'. See https://www.terraform.io/docs/providers/aws/r/ecs_task_definition.html#volume for more info.
 
 ### Outputs
 
