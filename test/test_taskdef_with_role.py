@@ -1,9 +1,8 @@
-import unittest
 import os
-import tempfile
 import shutil
-
-from subprocess import check_output, check_call
+import tempfile
+import unittest
+from subprocess import check_call, check_output
 from textwrap import dedent
 
 
