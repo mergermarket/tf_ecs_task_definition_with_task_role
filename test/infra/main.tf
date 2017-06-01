@@ -11,17 +11,18 @@ provider "aws" {
 }
 
 variable "task_volume_param" {
-    description = "The test can set this var to be passed to the module"
-    type = "map"
-    default = {}
+  description = "The test can set this var to be passed to the module"
+  type        = "map"
+  default     = {}
 }
 
 module "taskdef_with_role" {
-    source = "../.."
+  source = "../.."
 
-    family                = "tf_ecs_task_def_test_family"
-    container_definitions = [
-        <<END
+  family = "tf_ecs_task_def_test_family"
+
+  container_definitions = [
+    <<END
 {
   "name": "web",
   "image": "hello-world:latest",
@@ -30,8 +31,10 @@ module "taskdef_with_role" {
   "essential": true
 }
 END
-    ]
-    policy                = <<END
+    ,
+  ]
+
+  policy = <<END
 {
   "Version": "2012-10-17",
   "Statement": {
@@ -42,5 +45,5 @@ END
 }
 END
 
-    volume = "${var.task_volume_param}"
+  volume = "${var.task_volume_param}"
 }
