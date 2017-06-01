@@ -5,6 +5,8 @@ ENV TERRAFORM_VERSION=0.9.5
 ENV TERRAFORM_ZIP=terraform_${TERRAFORM_VERSION}_linux_amd64.zip
 ENV TERRAFORM_SUM=0cbb5474c76d878fbc99e7705ce6117f4ea0838175c13b2663286a207e38d783
 
+ENV PYTHONDONTWRITEBYTECODE donot
+
 RUN apk add -U ca-certificates curl git && \
     cd /tmp && \
     curl -fsSLO https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/${TERRAFORM_ZIP} && \
