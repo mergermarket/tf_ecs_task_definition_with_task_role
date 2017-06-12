@@ -100,3 +100,31 @@ class TestTaskdefWithRole(unittest.TestCase):
         """).strip()
 
         assert expected in output
+
+    def test_task_definition_is_created_when_long_family_name(self):
+        # Given
+        family="a"*33
+
+        output = check_output([
+            'terraform',
+            'plan',
+            '-no-color',
+            '-var', 'family_param={}'.format(family),
+            self.module_path
+        ], cwd=self.workdir
+        ).decode('utf-8')
+
+        expected = dedent("""
+            + module.taskdef_with_role.task_definition.aws_ecs_task_definition.taskdef
+                arn:                         "<computed>"
+                container_definitions:       "a173db30ec08bc3c9ca77b5797aeae40987c1ef7"
+                family:                      "{family}"
+                network_mode:                "<computed>"
+                revision:                    "<computed>"
+                task_role_arn:               "${{var.task_role_arn}}"
+                volume.#:                    "1"
+                volume.3039886685.host_path: "/tmp/dummy_volume"
+                volume.3039886685.name:      "dummy"
+        """).strip().format(family=family)
+
+        assert expected in output
