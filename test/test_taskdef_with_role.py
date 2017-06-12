@@ -2,6 +2,7 @@ import os
 import shutil
 import tempfile
 import unittest
+
 from subprocess import check_call, check_output
 from textwrap import dedent
 
@@ -25,8 +26,6 @@ class TestTaskdefWithRole(unittest.TestCase):
             ['terraform', 'plan', '-no-color', self.module_path],
             cwd=self.workdir
         ).decode('utf-8')
-
-        print(output)
 
         expected = dedent("""
             + module.taskdef_with_role.task_definition.aws_ecs_task_definition.taskdef
@@ -52,8 +51,6 @@ class TestTaskdefWithRole(unittest.TestCase):
             cwd=self.workdir
         ).decode('utf-8')
 
-        print(output)
-
         expected = dedent("""
             + module.taskdef_with_role.task_definition.aws_ecs_task_definition.taskdef
                 arn:                       "<computed>"
@@ -78,7 +75,7 @@ class TestTaskdefWithRole(unittest.TestCase):
         expected = dedent("""
             + module.taskdef_with_role.aws_iam_role.task_role
                 arn:                "<computed>"
-                assume_role_policy: "{\\n  \\"Version\\": \\"2012-10-17\\",\\n  \\"Statement\\": [\\n    {\\n      \\"Sid\\": \\"\\",\\n      \\"Effect\\": \\"Allow\\",\\n      \\"Action\\": \\"sts:AssumeRole\\",\\n      \\"Principal\\": {\\n        \\"Service\\": \\"ec2.amazonaws.com\\"\\n      }\\n    }\\n  ]\\n}"
+                assume_role_policy: "{\\n  \\"Version\\": \\"2012-10-17\\",\\n  \\"Statement\\": [\\n    {\\n      \\"Sid\\": \\"\\",\\n      \\"Effect\\": \\"Allow\\",\\n      \\"Action\\": \\"sts:AssumeRole\\",\\n      \\"Principal\\": {\\n        \\"Service\\": \\"ecs-tasks.amazonaws.com\\"\\n      }\\n    }\\n  ]\\n}"
                 create_date:        "<computed>"
                 name:               "<computed>"
                 name_prefix:        "tf_ecs_task_def_test_family"
