@@ -16,10 +16,15 @@ variable "task_volume_param" {
   default     = {}
 }
 
+variable "family_param" {
+  description = "The test can set this var to be passed to the module"
+  default     = "tf_ecs_task_def_test_family"
+}
+
 module "taskdef_with_role" {
   source = "../.."
 
-  family = "tf_ecs_task_def_test_family"
+  family = "${var.family_param}"
 
   container_definitions = [
     <<END
