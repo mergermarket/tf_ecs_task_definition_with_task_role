@@ -14,7 +14,7 @@ class TestTaskdefWithRole(unittest.TestCase):
         self.module_path = os.path.join(os.getcwd(), 'test', 'infra')
 
         check_call(
-            ['terraform', 'get', self.module_path],
+            ['terraform', 'init', self.module_path],
             cwd=self.workdir)
 
     def tearDown(self):
@@ -76,6 +76,30 @@ class TestTaskdefWithRole(unittest.TestCase):
             + module.taskdef_with_role.aws_iam_role.task_role
                 arn:                "<computed>"
                 assume_role_policy: "{\\n  \\"Version\\": \\"2012-10-17\\",\\n  \\"Statement\\": [\\n    {\\n      \\"Sid\\": \\"\\",\\n      \\"Effect\\": \\"Allow\\",\\n      \\"Action\\": \\"sts:AssumeRole\\",\\n      \\"Principal\\": {\\n        \\"Service\\": \\"ecs-tasks.amazonaws.com\\"\\n      }\\n    }\\n  ]\\n}"
+                create_date:        "<computed>"
+                name:               "<computed>"
+                name_prefix:        "tf_ecs_task_def_test_family"
+                path:               "/"
+                unique_id:          "<computed>"
+        """).strip()
+
+        assert expected in output
+
+    def test_assume_role_policy_is_passed_in(self):
+        output = check_output([
+            'terraform', 
+            'plan', 
+            '-var', 'assume_role_policy=\'{\"Key\":\"Value\"}\'',
+            '-no-color', 
+            self.module_path
+        ],
+            cwd=self.workdir
+        ).decode('utf-8')
+
+        expected = dedent("""
+            + module.taskdef_with_role.aws_iam_role.task_role
+                arn:                "<computed>"
+                assume_role_policy: "{\"Key\":\"Value\"}"
                 create_date:        "<computed>"
                 name:               "<computed>"
                 name_prefix:        "tf_ecs_task_def_test_family"

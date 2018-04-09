@@ -13,6 +13,12 @@ variable "policy" {
   type        = "string"
 }
 
+variable "assume_role_policy" {
+  description = "A valid IAM policy for the task"
+  type        = "string"
+  default     = ""
+}
+
 variable "volume" {
   description = "Volume block map with 'name' and 'host_path'."
   type        = "map"
