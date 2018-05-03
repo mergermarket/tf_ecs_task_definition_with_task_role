@@ -131,7 +131,6 @@ class TestTaskdefWithRole(unittest.TestCase):
                   path:                        "/"
                   unique_id:                   <computed>
         """).strip()
-        import pdb; pdb.set_trace()
         assert expected in output
 
     def test_task_role_is_created_with_custom_assume_role_policy(self):
