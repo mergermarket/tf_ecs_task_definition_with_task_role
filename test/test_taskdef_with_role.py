@@ -119,19 +119,19 @@ class TestTaskdefWithRole(unittest.TestCase):
         ).decode('utf-8')
 
         expected = dedent("""
-            + module.taskdef_with_role.module.task_definition.aws_ecs_task_definition.taskdef
+            + module.taskdef_with_role.aws_iam_role.task_role
                   id:                          <computed>
                   arn:                         <computed>
-                  container_definitions:       "[{\\"cpu\\":10,\\"essential\\":true,\\"image\\":\\"hello-world:latest\\",\\"memory\\":128,\\"name\\":\\"web\\"}]"
-                  family:                      "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-                  network_mode:                <computed>
-                  revision:                    <computed>
-                  task_role_arn:               "${var.task_role_arn}"
-                  volume.#:                    "1"
-                  volume.3039886685.host_path: "/tmp/dummy_volume"
-                  volume.3039886685.name:      "dummy"
+                  assume_role_policy:          "{\\n  \\"Version\\": \\"2012-10-17\\",\\n  \\"Statement\\": [\\n    {\\n      \\"Sid\\": \\"\\",\\n      \\"Effect\\": \\"Allow\\",\\n      \\"Action\\": \\"sts:AssumeRole\\",\\n      \\"Principal\\": {\\n        \\"Service\\": \\"ecs-tasks.amazonaws.com\\"\\n      }\\n    }\\n  ]\\n}"
+                  create_date:                 <computed>
+                  force_detach_policies:       "false"
+                  max_session_duration:        "3600"
+                  name:                        <computed>
+                  name_prefix:                 "aaaaaaaaaaaaaaaaaaaaaaaatf2368"
+                  path:                        "/"
+                  unique_id:                   <computed>
         """).strip()
-
+        import pdb; pdb.set_trace()
         assert expected in output
 
     def test_task_role_is_created_with_custom_assume_role_policy(self):
