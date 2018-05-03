@@ -18,7 +18,7 @@ resource "aws_iam_role" "task_role" {
       var.family :
       format("%.24stf%.4s", var.family, sha1(var.family))
   }"
-  assume_role_policy = "${data.aws_iam_policy_document.instance-assume-role-policy.json}"
+  assume_role_policy = "${var.assume_role_policy == "" ? data.aws_iam_policy_document.instance-assume-role-policy.json : var.assume_role_policy}"
 }
 
 data "aws_iam_policy_document" "instance-assume-role-policy" {
