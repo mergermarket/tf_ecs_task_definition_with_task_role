@@ -18,3 +18,9 @@ variable "volume" {
   type        = "map"
   default     = {}
 }
+
+variable "assume_role_policy" {
+  description = "A valid IAM policy for assuming roles - optional"
+  type        = "string"
+  default     = ""
+}
