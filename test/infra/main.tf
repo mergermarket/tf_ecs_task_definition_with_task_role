@@ -1,5 +1,5 @@
 provider "aws" {
-  version = "~> 1.16"
+  version                     = "~> 1.16"
   skip_credentials_validation = true
   skip_metadata_api_check     = true
   skip_get_ec2_platforms      = true
@@ -56,7 +56,8 @@ END
   }
 }
 END
-  volume                = "${var.task_volume_param}"
+
+  volume = "${var.task_volume_param}"
 }
 
 module "taskdef_with_role_and_assume_role" {
@@ -87,8 +88,9 @@ END
   }
 }
 END
-  volume                = "${var.task_volume_param}"
-  assume_role_policy    = "${data.aws_iam_policy_document.assume-role-policy.json}"
+
+  volume             = "${var.task_volume_param}"
+  assume_role_policy = "${data.aws_iam_policy_document.assume-role-policy.json}"
 }
 
 data "aws_iam_policy_document" "assume-role-policy" {
@@ -96,7 +98,8 @@ data "aws_iam_policy_document" "assume-role-policy" {
     actions = ["sts:AssumeRole"]
 
     principals {
-      type        = "Service"
+      type = "Service"
+
       identifiers = [
         "ecs-tasks.amazonaws.com",
         "ec2.amazonaws.com",
@@ -110,7 +113,8 @@ data "aws_iam_policy_document" "assume-role-policy" {
     actions = ["sts:AssumeRole"]
 
     principals {
-      type        = "AWS"
+      type = "AWS"
+
       identifiers = [
         "arn:aws:iam::371640587010:role/autoscaler",
         "arn:aws:iam::733578946173:role/autoscaler",

@@ -1,3 +1,12 @@
+variable "env" {
+  description = "Environment name"
+}
+
+variable "release" {
+  type        = "map"
+  description = "Metadata about the release"
+}
+
 variable "family" {
   description = "A unique name for your task defintion."
   type        = "string"
