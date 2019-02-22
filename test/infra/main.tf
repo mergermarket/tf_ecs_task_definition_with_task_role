@@ -28,6 +28,17 @@ variable "assume_role_policy" {
   default     = ""
 }
 
+variable "release" {
+  type        = "map"
+  description = "Metadata about the release"
+  default     = {}
+}
+
+variable "env" {
+  description = "Environment name"
+  default     = ""
+}
+
 module "taskdef_with_role" {
   source = "../.."
 

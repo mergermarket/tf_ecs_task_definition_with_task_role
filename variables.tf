@@ -1,10 +1,12 @@
 variable "env" {
   description = "Environment name"
+  default     = ""
 }
 
 variable "release" {
   type        = "map"
   description = "Metadata about the release"
+  default     = {}
 }
 
 variable "family" {

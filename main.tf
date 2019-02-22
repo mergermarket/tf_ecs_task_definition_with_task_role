@@ -1,5 +1,5 @@
 module "task_definition" {
-  source                = "github.com/mergermarket/tf_ecs_task_definition"
+  source                = "github.com/mergermarket/tf_ecs_task_definition?ref=secrets"
   family                = "${var.family}"
   container_definitions = "${var.container_definitions}"
   task_role_arn         = "${aws_iam_role.task_role.arn}"
@@ -44,11 +44,11 @@ resource "aws_iam_role" "ecs_tasks_execution_role" {
 }
 
 locals {
-  team      = "${var.release["team"]}"
-  component = "${var.release["component"]}"
+  team      = "${lookup(var.release, "team", "")}"
+  component = "${lookup(var.release, "component", "")}"
 }
 
-resource "aws_iam_role_policy" "role_policy" {
+resource "aws_iam_role_policy" "execution_role_policy" {
   role = "${aws_iam_role.ecs_tasks_execution_role.id}"
   name = "role_policy"
 
