@@ -1,5 +1,5 @@
 module "task_definition" {
-  source                = "github.com/mergermarket/tf_ecs_task_definition?ref=secrets"
+  source                = "github.com/mergermarket/tf_ecs_task_definition"
   family                = "${var.family}"
   container_definitions = "${var.container_definitions}"
   task_role_arn         = "${aws_iam_role.task_role.arn}"
@@ -43,9 +43,16 @@ resource "aws_iam_role" "ecs_tasks_execution_role" {
   assume_role_policy = "${data.aws_iam_policy_document.instance-assume-role-policy.json}"
 }
 
+data "aws_caller_identity" "current" {
+  count = "${var.is_test ? 0 : 1}"
+}
+
+data "aws_region" "current" {}
+
 locals {
-  team      = "${lookup(var.release, "team", "")}"
-  component = "${lookup(var.release, "component", "")}"
+  team       = "${lookup(var.release, "team", "")}"
+  component  = "${lookup(var.release, "component", "")}"
+  account_id = "${element(concat(aws_instance.example.*.id, list("")), 0)}"
 }
 
 resource "aws_iam_role_policy" "execution_role_policy" {
@@ -81,13 +88,13 @@ resource "aws_iam_role_policy" "execution_role_policy" {
           "Sid": "",
           "Effect": "Allow",
           "Action": "secretsmanager:GetSecretValue",
-          "Resource": "arn:aws:secretsmanager:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:secret:common/*"
+          "Resource": "arn:aws:secretsmanager:${data.aws_region.current.name}:${local.account_id}:secret:common/*"
       },
       {
           "Sid": "",
           "Effect": "Allow",
           "Action": "secretsmanager:GetSecretValue",
-          "Resource": "arn:aws:secretsmanager:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:secret:${local.team}/${var.env}/${local.component}/*"
+          "Resource": "arn:aws:secretsmanager:${data.aws_region.current.name}:${local.account_id}:secret:${local.team}/${var.env}/${local.component}/*"
       }
     ]
 }

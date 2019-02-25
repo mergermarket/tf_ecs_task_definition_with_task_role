@@ -36,6 +36,7 @@ variable "assume_role_policy" {
   default     = ""
 }
 
-data "aws_caller_identity" "current" {}
-
-data "aws_region" "current" {}
+variable "is_test" {
+  description = "For testing only. Stops the call to AWS for sts"
+  default     = false
+}
