@@ -52,7 +52,7 @@ data "aws_region" "current" {}
 locals {
   team       = "${lookup(var.release, "team", "")}"
   component  = "${lookup(var.release, "component", "")}"
-  account_id = "${element(concat(aws_instance.example.*.id, list("")), 0)}"
+  account_id = "${element(concat(data.aws_caller_identity.current.*.account_id, list("")), 0)}"
 }
 
 resource "aws_iam_role_policy" "execution_role_policy" {
