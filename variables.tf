@@ -35,3 +35,7 @@ variable "assume_role_policy" {
   type        = "string"
   default     = ""
 }
+
+data "aws_caller_identity" "current" {}
+
+data "aws_region" "current" {}
