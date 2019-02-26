@@ -1,3 +1,14 @@
+variable "env" {
+  description = "Environment name"
+  default     = ""
+}
+
+variable "release" {
+  type        = "map"
+  description = "Metadata about the release"
+  default     = {}
+}
+
 variable "family" {
   description = "A unique name for your task defintion."
   type        = "string"
@@ -23,4 +34,9 @@ variable "assume_role_policy" {
   description = "A valid IAM policy for assuming roles - optional"
   type        = "string"
   default     = ""
+}
+
+variable "is_test" {
+  description = "For testing only. Stops the call to AWS for sts"
+  default     = false
 }
