@@ -40,7 +40,7 @@ variable "env" {
 }
 
 module "taskdef_with_role" {
-  source = "../.."
+  source  = "../.."
   is_test = true
 
   family = "${var.family_param}"
@@ -73,7 +73,7 @@ END
 }
 
 module "taskdef_with_role_and_assume_role" {
-  source = "../.."
+  source  = "../.."
   is_test = true
 
   family = "${var.family_param}"

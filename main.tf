@@ -1,3 +1,15 @@
+locals {
+  team       = "${lookup(var.release, "team", "")}"
+  component  = "${lookup(var.release, "component", "")}"
+  account_id = "${element(concat(data.aws_caller_identity.current.*.account_id, list("")), 0)}"
+
+  name_prefix = "${
+    length(var.family) <= 32 ?
+      var.family :
+      format("%.24stf%.4s", var.family, sha1(var.family))
+  }"
+}
+
 module "task_definition" {
   source                = "github.com/mergermarket/tf_ecs_task_definition"
   family                = "${var.family}"
@@ -8,17 +20,13 @@ module "task_definition" {
 }
 
 resource "aws_iam_role_policy" "role_policy" {
-  name_prefix = "${var.family}"
+  name_prefix = "${local.name_prefix}"
   role        = "${aws_iam_role.task_role.id}"
   policy      = "${var.policy}"
 }
 
 resource "aws_iam_role" "task_role" {
-  name_prefix = "${
-    length(var.family) <= 32 ?
-      var.family :
-      format("%.24stf%.4s", var.family, sha1(var.family))
-  }"
+  name_prefix = "${local.name_prefix}"
 
   assume_role_policy = "${
     var.assume_role_policy == "" ?
@@ -39,7 +47,7 @@ data "aws_iam_policy_document" "instance-assume-role-policy" {
 }
 
 resource "aws_iam_role" "ecs_tasks_execution_role" {
-  name               = "${var.family}-execution-role"
+  name               = "${local.name_prefix}-execution-role"
   assume_role_policy = "${data.aws_iam_policy_document.instance-assume-role-policy.json}"
 }
 
@@ -48,12 +56,6 @@ data "aws_caller_identity" "current" {
 }
 
 data "aws_region" "current" {}
-
-locals {
-  team       = "${lookup(var.release, "team", "")}"
-  component  = "${lookup(var.release, "component", "")}"
-  account_id = "${element(concat(data.aws_caller_identity.current.*.account_id, list("")), 0)}"
-}
 
 resource "aws_iam_role_policy" "execution_role_policy" {
   role = "${aws_iam_role.ecs_tasks_execution_role.id}"
