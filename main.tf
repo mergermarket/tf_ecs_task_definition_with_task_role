@@ -27,6 +27,7 @@ resource "aws_iam_role_policy" "role_policy" {
 
 resource "aws_iam_role" "task_role" {
   name_prefix = "${local.name_prefix}"
+  description = "Task role for ${var.family}"
 
   assume_role_policy = "${
     var.assume_role_policy == "" ?
@@ -47,7 +48,8 @@ data "aws_iam_policy_document" "instance-assume-role-policy" {
 }
 
 resource "aws_iam_role" "ecs_tasks_execution_role" {
-  name               = "${local.name_prefix}-execution-role"
+  name_prefix        = "${local.name_prefix}"
+  description        = "Task execution role for ${var.family}"
   assume_role_policy = "${data.aws_iam_policy_document.instance-assume-role-policy.json}"
 }
 

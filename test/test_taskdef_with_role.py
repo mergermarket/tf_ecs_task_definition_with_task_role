@@ -41,7 +41,6 @@ module.taskdef_with_role_and_assume_role.module.task_definition.aws_ecs_task_def
       volume.3039886685.name:                          "dummy"
 Plan: 10 to add, 0 to change, 0 to destroy.
         """).strip()
-
         assert expected in output
 
     def test_task_definition_passes_volume(self):
@@ -85,6 +84,7 @@ module.taskdef_with_role.module.task_definition.aws_ecs_task_definition.taskdef
       arn:                                             <computed>
       assume_role_policy:                              "{\\n  \\"Version\\": \\"2012-10-17\\",\\n  \\"Statement\\": [\\n    {\\n      \\"Sid\\": \\"\\",\\n      \\"Effect\\": \\"Allow\\",\\n      \\"Action\\": \\"sts:AssumeRole\\",\\n      \\"Principal\\": {\\n        \\"Service\\": \\"ecs-tasks.amazonaws.com\\"\\n      }\\n    }\\n  ]\\n}"
       create_date:                                     <computed>
+      description:                                     "Task role for tf_ecs_task_def_test_family"
       force_detach_policies:                           "false"
       max_session_duration:                            "3600"
       name:                                            <computed>
@@ -128,6 +128,7 @@ module.taskdef_with_role.module.task_definition.aws_ecs_task_definition.taskdef
       arn:                                             <computed>
       assume_role_policy:                              "{\\n  \\"Version\\": \\"2012-10-17\\",\\n  \\"Statement\\": [\\n    {\\n      \\"Sid\\": \\"\\",\\n      \\"Effect\\": \\"Allow\\",\\n      \\"Action\\": \\"sts:AssumeRole\\",\\n      \\"Principal\\": {\\n        \\"Service\\": \\"ecs-tasks.amazonaws.com\\"\\n      }\\n    }\\n  ]\\n}"
       create_date:                                     <computed>
+      description:                                     "Task role for aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       force_detach_policies:                           "false"
       max_session_duration:                            "3600"
       name:                                            <computed>
@@ -155,6 +156,7 @@ module.taskdef_with_role.module.task_definition.aws_ecs_task_definition.taskdef
       arn:                                             <computed>
       assume_role_policy:                              "{\\n  \\"Version\\": \\"2012-10-17\\",\\n  \\"Statement\\": [\\n    {\\n      \\"Sid\\": \\"\\",\\n      \\"Effect\\": \\"Allow\\",\\n      \\"Action\\": \\"sts:AssumeRole\\",\\n      \\"Principal\\": {\\n        \\"Service\\": [\\n          \\"ecs.amazonaws.com\\",\\n          \\"ecs-tasks.amazonaws.com\\",\\n          \\"ec2.amazonaws.com\\",\\n          \\"autoscaling.amazonaws.com\\"\\n        ]\\n      }\\n    },\\n    {\\n      \\"Sid\\": \\"\\",\\n      \\"Effect\\": \\"Allow\\",\\n      \\"Action\\": \\"sts:AssumeRole\\",\\n      \\"Principal\\": {\\n        \\"AWS\\": [\\n          \\"arn:aws:iam::733578946173:role/autoscaler\\",\\n          \\"arn:aws:iam::371640587010:role/autoscaler\\"\\n        ]\\n      }\\n    }\\n  ]\\n}"
       create_date:                                     <computed>
+      description:                                     "Task role for tf_ecs_task_def_test_family"
       force_detach_policies:                           "false"
       max_session_duration:                            "3600"
       name:                                            <computed>
