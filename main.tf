@@ -17,6 +17,7 @@ module "task_definition" {
   task_role_arn         = "${aws_iam_role.task_role.arn}"
   execution_role_arn    = "${aws_iam_role.ecs_tasks_execution_role.arn}"
   volume                = "${var.volume}"
+  network_mode          = "${var.network_mode}"
 }
 
 resource "aws_iam_role_policy" "role_policy" {

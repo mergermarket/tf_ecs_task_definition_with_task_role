@@ -32,7 +32,7 @@ module.taskdef_with_role_and_assume_role.module.task_definition.aws_ecs_task_def
       container_definitions:                           "[{\\"cpu\\":10,\\"essential\\":true,\\"image\\":\\"hello-world:latest\\",\\"memory\\":128,\\"name\\":\\"web\\"}]"
       execution_role_arn:                              "${var.execution_role_arn}"
       family:                                          "tf_ecs_task_def_test_family"
-      network_mode:                                    <computed>
+      network_mode:                                    "bridge"
       revision:                                        <computed>
       task_role_arn:                                   "${var.task_role_arn}"
       volume.#:                                        "1"
@@ -59,7 +59,7 @@ module.taskdef_with_role.module.task_definition.aws_ecs_task_definition.taskdef
       container_definitions:                         "[{\\"cpu\\":10,\\"essential\\":true,\\"image\\":\\"hello-world:latest\\",\\"memory\\":128,\\"name\\":\\"web\\"}]"
       execution_role_arn:                            "${var.execution_role_arn}"
       family:                                        "tf_ecs_task_def_test_family"
-      network_mode:                                  <computed>
+      network_mode:                                  "bridge"
       revision:                                      <computed>
       task_role_arn:                                 "${var.task_role_arn}"
       volume.#:                                      "1"
