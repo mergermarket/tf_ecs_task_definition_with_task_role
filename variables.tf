@@ -40,3 +40,9 @@ variable "is_test" {
   description = "For testing only. Stops the call to AWS for sts"
   default     = false
 }
+
+variable "network_mode" {
+  description = "Network mode valid values are: none, bridge, awsvpc, and host. Default is bridge (See: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html)"
+  type        = "string"
+  default     = "bridge"
+}
