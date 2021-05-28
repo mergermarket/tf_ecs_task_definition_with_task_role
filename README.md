@@ -1,6 +1,6 @@
 # tf_ecs_task_definition_with_task_role
 
-[![Build Status](https://travis-ci.org/mergermarket/tf_ecs_task_definition_with_task_role.svg?branch=master)](https://travis-ci.org/mergermarket/tf_ecs_task_definition_with_task_role)
+[![Build Status](https://travis-ci.com/mergermarket/tf_ecs_task_definition_with_task_role.svg?branch=master)](https://travis-ci.com/mergermarket/tf_ecs_task_definition_with_task_role)
 
 ## Usage
 Creates a task definition for an ECS service, with an IAM role for the task associated.
